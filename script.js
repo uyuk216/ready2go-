@@ -77,7 +77,7 @@
   function updateRegionSelect(pref) {
     const regionSel = document.getElementById("region");
     if (!regionSel) return;
-    regionSel.innerHTML = '<option value="">地域を選択（ゴミ収集日表示）</option>';
+    regionSel.innerHTML = '<option value="">地域を選択</option>';
     const regions = Garbage.getRegions(pref);
     regions.forEach(r => {
       const opt = document.createElement("option");
