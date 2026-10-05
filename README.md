@@ -42,6 +42,8 @@ cp .env.example .env
 npm start
 ```
 
+`.env`の`NODE_ENV`と`DATABASE_URL`は、ローカルで試すだけなら未設定のままで構いません（`data.json`に保存されます）。
+
 ブラウザで `http://localhost:3000` を開きます。LINE連携機能にはLINE Developersの設定が必要です。
 
 変更後の一括検査は次で実行できます。

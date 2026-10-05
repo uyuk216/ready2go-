@@ -46,10 +46,11 @@ const Weather = (() => {
   function requestLocation(){return new Promise(resolve=>{if(!navigator.geolocation)return resolve(null);navigator.geolocation.getCurrentPosition(pos=>{gpsCoords={lat:pos.coords.latitude,lon:pos.coords.longitude};localStorage.setItem("gpsLat",gpsCoords.lat);localStorage.setItem("gpsLon",gpsCoords.lon);resolve(gpsCoords);},()=>resolve(null),{timeout:8000});});}
   function loadSavedGps(){const lat=parseFloat(localStorage.getItem("gpsLat")),lon=parseFloat(localStorage.getItem("gpsLon"));if(!Number.isNaN(lat)&&!Number.isNaN(lon)){gpsCoords={lat,lon};return gpsCoords;}return null;}
   async function getCoords(){
-    const useGps=localStorage.getItem("locationMode")==="gps"&&localStorage.getItem("consentLocation")==="yes";
-    if(useGps){const saved=gpsCoords||loadSavedGps();if(saved){locationSource="GPS位置情報";return{...saved,cacheKey:`gps:${saved.lat.toFixed(3)}:${saved.lon.toFixed(3)}`};}}
     const pref=document.getElementById("pref")?.value||localStorage.getItem("pref")||"東京都";
     const region=document.getElementById("region")?.value||localStorage.getItem(`region_${pref}`)||"";
+    // 選んだ地域を優先し、地域が未選択のときだけ位置情報（GPS）を使う
+    const useGps=!region&&localStorage.getItem("locationMode")==="gps"&&localStorage.getItem("consentLocation")==="yes";
+    if(useGps){const saved=gpsCoords||loadSavedGps();if(saved){locationSource="GPS位置情報";return{...saved,cacheKey:`gps:${saved.lat.toFixed(3)}:${saved.lon.toFixed(3)}`};}}
     const cacheKey=`address:${pref}:${region}`;
     if(region){
       try{
