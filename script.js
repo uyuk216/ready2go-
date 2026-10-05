@@ -62,6 +62,7 @@
     prefSel.value = savedPref;
 
     prefSel.onchange = async () => {
+      useAddressMode();
       localStorage.setItem("pref", prefSel.value);
       updateRegionSelect(prefSel.value);
       await loadAndDraw();
@@ -71,6 +72,15 @@
 
     // 初期地域リスト
     updateRegionSelect(savedPref);
+  }
+
+  // 地域を手で選んだときは、位置情報モードをやめて住所モードに切り替える
+  function useAddressMode() {
+    if (localStorage.getItem("locationMode") !== "gps") return;
+    localStorage.setItem("locationMode", "address");
+    localStorage.removeItem("gpsLat"); localStorage.removeItem("gpsLon");
+    const modeSelect = document.getElementById("locationMode");
+    if (modeSelect) modeSelect.value = "address";
   }
 
   // ── 市区町村セレクト ──────────────────────────────────
@@ -92,6 +102,7 @@
   const regionSel = document.getElementById("region");
   if (regionSel) {
     regionSel.onchange = async () => {
+      useAddressMode();
       const pref = prefSel?.value || "東京都";
       localStorage.setItem("region_" + pref, regionSel.value);
       await loadAndDraw();
