@@ -373,6 +373,7 @@ select:focus, input[type="date"]:focus { border-color: var(--accent); }
 }
 .settings-row label { font-size: 14px; color: var(--text-2); }
 .settings-row input, .settings-row select { max-width: 155px; min-width: 0; }
+.settings-row input[type="time"] { padding:9px 10px; border:1px solid var(--border); border-radius:9px; background:var(--surface2); color:var(--text); font:inherit; }
 .notification-time-setting { padding:10px 16px; border-bottom:1px solid var(--border); }
 .notification-time-setting > label { display:block; margin-bottom:7px; font-size:14px; color:var(--text-2); }
 .time-add-row { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:7px; }
