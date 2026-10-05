@@ -91,12 +91,12 @@
 
   const regionSel = document.getElementById("region");
   if (regionSel) {
-    regionSel.onchange = () => {
+    regionSel.onchange = async () => {
       const pref = prefSel?.value || "東京都";
       localStorage.setItem("region_" + pref, regionSel.value);
-      Calendar.draw();
-      Dashboard?.refresh?.();
-      Ready2GoFeatures?.refresh?.();
+      await loadAndDraw();
+      await Dashboard?.refresh?.();
+      await Ready2GoFeatures?.refresh?.();
     };
   }
 
